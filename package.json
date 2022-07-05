@@ -1,0 +1,17 @@
+{
+  "name": "noip",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "chokidar index.js -c 'node index.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "playwright": "^1.23.1"
+  }
+}
