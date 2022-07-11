@@ -1,12 +1,10 @@
-
 const dotenv = require("dotenv");
 const playwright = require("playwright");
-const fs = require("fs");
 
 dotenv.config();
 
 (async () => {
-  const browser = await playwright.chromium.launch({ headless: false });
+  const browser = await playwright.chromium.launch({ headless: true });
 
   console.log("Initiating browser.")
   const page = await (await browser.newContext()).newPage();
@@ -27,12 +25,12 @@ dotenv.config();
 
   let dangerDiv
   try {
-    dangerDiv = await page.locator(".host-data-widget .text-danger")
+    dangerDiv = await page.$$(".host-data-widget .text-danger")
   }
   catch (e) {
     console.log("Expiry warning not found. All good.", new Date())
   }
-  if (dangerDiv != null) {
+  if (dangerDiv.length > 0) {
     const dangerContent = await dangerDiv.textContent()
     console.log("Warning: Expiry warning exists!", dangerContent)
 
@@ -71,6 +69,9 @@ dotenv.config();
       console.error("Domain not renewed.")
       process.exit(1)
     }
+  }
+  else {
+    console.log("Expiry warning not found. All good.", new Date())
   }
 
   await browser.close();
